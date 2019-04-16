@@ -233,6 +233,12 @@ set mailserver smtp.EMAILHOST port 587
     #if inode usage > 30000 then alert
 #    if inode usage > 99% then stop
     group server
+
+## luna filesystem
+check filesystem luna with path /luna
+    if space usage > 90% for 5 times within 15 cycles then alert
+    #if inode usage > 30000 then alert
+    group server
 #
 #
 ## root filesystem
@@ -304,7 +310,7 @@ check program sensors with path /usr/bin/sensors
 #
 #
 ## hddtemp all drives
-check program hddtemp with path /usr/sbin/hddtemp /dev/sda /dev/sdb /dev/sdc /dev/sdd
+check program hddtemp with path /usr/sbin/hddtemp /dev/sda /dev/sdb /dev/sdc /dev/sdd /dev/sdf /dev/sdg /dev/sdh /dev/sdi
    if status != 0 then alert
    group health
 
@@ -358,6 +364,65 @@ check program SSD-E-root-Health with path "/etc/monit/scripts/hdhealth.sh e"
     if status != 0 then alert
     group health
 
+## smart test drive sdf
+check program SSD-F-Health with path "/etc/monit/scripts/hdhealth.sh f"
+    every 120 cycles
+    if status != 0 then alert
+    group health
+
+## HDD Temp drive sdf
+check program DRIVE-F-Temp with path "/etc/monit/scripts/hdtemp.sh f 45"
+    every 10 cycles
+    if status != 0 then alert
+    group health
+
+## smart test drive sdg
+check program SSD-G-Health with path "/etc/monit/scripts/hdhealth.sh g"
+    every 120 cycles
+    if status != 0 then alert
+    group health
+
+## HDD Temp drive sdg
+check program DRIVE-G-Temp with path "/etc/monit/scripts/hdtemp.sh g 45"
+    every 10 cycles
+    if status != 0 then alert
+    group health
+
+## smart test drive sdh
+check program SSD-H-Health with path "/etc/monit/scripts/hdhealth.sh h"
+    every 120 cycles
+    if status != 0 then alert
+    group health
+
+## HDD Temp drive sdh
+check program DRIVE-H-Temp with path "/etc/monit/scripts/hdtemp.sh h 45"
+    every 10 cycles
+    if status != 0 then alert
+    group health
+
+## smart test drive sdi
+check program SSD-I-Health with path "/etc/monit/scripts/hdhealth.sh i"
+    every 120 cycles
+    if status != 0 then alert
+    group health
+
+## HDD Temp drive sdi
+check program DRIVE-I-Temp with path "/etc/monit/scripts/hdtemp.sh i 45"
+    every 10 cycles
+    if status != 0 then alert
+    group health
+
+## pool health - luna
+check program ZPOOL-luna-Health with path "/sbin/zpool status -x luna"
+    every 120 cycles
+    if status != 0 then alert
+    group health
+
+## pool health - media
+check program ZPOOL-media-Health with path "/sbin/zpool status -x media"
+    every 120 cycles
+    if status != 0 then alert
+    group health
 
 ###############################################################################
 ## Includes
