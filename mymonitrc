@@ -310,117 +310,124 @@ check program sensors with path /usr/bin/sensors
 #
 #
 ## hddtemp all drives
-check program hddtemp with path /usr/sbin/hddtemp /dev/sda /dev/sdb /dev/sdc /dev/sdd /dev/sdf /dev/sdg /dev/sdh /dev/sdi
+check program hddtemp with path /usr/sbin/hddtemp /dev/sda /dev/sdb /dev/sdc /dev/sdd /dev/sde /dev/sdf /dev/sdg /dev/sdh
    if status != 0 then alert
    group health
 
 ## smart test drive sda
 check program DRIVE-A-Health with path "/etc/monit/scripts/hdhealth.sh a"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 ## HDD Temp drive sda
 check program DRIVE-A-Temp with path "/etc/monit/scripts/hdtemp.sh a 45"
-    every 10 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## smart test drive sdb
 check program DRIVE-B-Health with path "/etc/monit/scripts/hdhealth.sh b"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 ## HDD Temp drive sdb
 check program DRIVE-B-Temp with path "/etc/monit/scripts/hdtemp.sh b 45"
-    every 10 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## smart test drive sdc
 check program DRIVE-C-Health with path "/etc/monit/scripts/hdhealth.sh c"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 ## HDD Temp drive sdc
 check program DRIVE-C-Temp with path "/etc/monit/scripts/hdtemp.sh c 45"
-    every 10 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## smart test drive sdd
 check program DRIVE-D-Health with path "/etc/monit/scripts/hdhealth.sh d"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 ## HDD Temp drive sdd
 check program DRIVE-D-Temp with path "/etc/monit/scripts/hdtemp.sh d 45"
-    every 10 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## smart test drive sde
-check program SSD-E-root-Health with path "/etc/monit/scripts/hdhealth.sh e"
-    every 120 cycles
+check program SSD-E-Health with path "/etc/monit/scripts/hdhealth.sh e"
+#    every 10 cycles
     if status != 0 then alert
     group health
 
+## HDD Temp drive sde
+check program DRIVE-E-Temp with path "/etc/monit/scripts/hdtemp.sh e 45"
+#    every 10 cycles
+    if status != 0 then alert
+    group health
+
+
 ## smart test drive sdf
 check program SSD-F-Health with path "/etc/monit/scripts/hdhealth.sh f"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## HDD Temp drive sdf
 check program DRIVE-F-Temp with path "/etc/monit/scripts/hdtemp.sh f 45"
-    every 10 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## smart test drive sdg
 check program SSD-G-Health with path "/etc/monit/scripts/hdhealth.sh g"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## HDD Temp drive sdg
 check program DRIVE-G-Temp with path "/etc/monit/scripts/hdtemp.sh g 45"
-    every 10 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## smart test drive sdh
 check program SSD-H-Health with path "/etc/monit/scripts/hdhealth.sh h"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## HDD Temp drive sdh
 check program DRIVE-H-Temp with path "/etc/monit/scripts/hdtemp.sh h 45"
-    every 10 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## smart test drive sdi
-check program SSD-I-Health with path "/etc/monit/scripts/hdhealth.sh i"
-    every 120 cycles
+check program SSD-I-root-Health with path "/etc/monit/scripts/hdhealth.sh i"
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## HDD Temp drive sdi
-check program DRIVE-I-Temp with path "/etc/monit/scripts/hdtemp.sh i 45"
-    every 10 cycles
-    if status != 0 then alert
-    group health
+#check program DRIVE-I-Temp with path "/etc/monit/scripts/hdtemp.sh i 45"
+#    every 10 cycles
+#    if status != 0 then alert
+#    group health
 
 ## pool health - luna
 check program ZPOOL-luna-Health with path "/sbin/zpool status -x luna"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
 ## pool health - media
 check program ZPOOL-media-Health with path "/sbin/zpool status -x media"
-    every 120 cycles
+#    every 10 cycles
     if status != 0 then alert
     group health
 
