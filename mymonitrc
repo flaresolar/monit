@@ -51,13 +51,14 @@
 
 ## Set limits for various tests. The following example shows the default values:
 ##
-# set limits {
+set limits {
 #     programOutput:     512 B,    # check program's output truncate limit
+     programOutput:     1024 B    # check program's output truncate limit
 #     sendExpectBuffer:  256 B,    # limit for send/expect protocol test
 #     fileContentBuffer: 512 B,    # limit for file content test
 #     httpContentBuffer: 1 MB,     # limit for HTTP content test
 #     networkTimeout:    5 seconds # timeout for network I/O
-# }
+}
 
 ## Set global SSL options (just most common options showed, see manual for
 ## full list).
@@ -167,8 +168,8 @@ set mailserver smtp.EMAILHOST port 587
 ## performed should a test fail.
 #
   check system $HOST
-    if loadavg (1min) > 6 then alert
-    if loadavg (5min) > 4 then alert
+    if loadavg (1min) > 8 then alert
+    if loadavg (5min) > 6 then alert
     if cpu usage > 95% for 10 cycles then alert
     if memory usage > 75% then alert
     if swap usage > 25% then alert
@@ -303,7 +304,18 @@ check filesystem boot with path /boot
 #    if status != 0 then alert
 #
 #
-## load sensors infor
+
+# read UPS status
+check program UPS-NAS with path "/bin/upsc nas@localhost"
+  if status != 0 then alert
+  group UPS
+
+# read impi sensors
+check program IPMI-Sensors with path "/usr/bin/ipmitool sdr"
+    if status != 0 then alert
+    group health
+
+## load sensors info
 check program sensors with path /usr/bin/sensors
     if status != 0 then alert
     group health
@@ -322,7 +334,7 @@ check program DRIVE-A-Health with path "/etc/monit/scripts/hdhealth.sh a"
 ## HDD Temp drive sda
 check program DRIVE-A-Temp with path "/etc/monit/scripts/hdtemp.sh a 45"
 #    every 10 cycles
-    if status != 0 then alert
+    if status != 0 for 3 cycles then alert
     group health
 
 ## smart test drive sdb
@@ -333,7 +345,7 @@ check program DRIVE-B-Health with path "/etc/monit/scripts/hdhealth.sh b"
 ## HDD Temp drive sdb
 check program DRIVE-B-Temp with path "/etc/monit/scripts/hdtemp.sh b 45"
 #    every 10 cycles
-    if status != 0 then alert
+    if status != 0 for 3 cycles then alert
     group health
 
 ## smart test drive sdc
@@ -344,7 +356,7 @@ check program DRIVE-C-Health with path "/etc/monit/scripts/hdhealth.sh c"
 ## HDD Temp drive sdc
 check program DRIVE-C-Temp with path "/etc/monit/scripts/hdtemp.sh c 45"
 #    every 10 cycles
-    if status != 0 then alert
+    if status != 0 for 3 cycles then alert
     group health
 
 ## smart test drive sdd
@@ -355,7 +367,7 @@ check program DRIVE-D-Health with path "/etc/monit/scripts/hdhealth.sh d"
 ## HDD Temp drive sdd
 check program DRIVE-D-Temp with path "/etc/monit/scripts/hdtemp.sh d 45"
 #    every 10 cycles
-    if status != 0 then alert
+    if status != 0 for 3 cycles then alert
     group health
 
 ## smart test drive sde
@@ -367,9 +379,8 @@ check program SSD-E-Health with path "/etc/monit/scripts/hdhealth.sh e"
 ## HDD Temp drive sde
 check program DRIVE-E-Temp with path "/etc/monit/scripts/hdtemp.sh e 45"
 #    every 10 cycles
-    if status != 0 then alert
+    if status != 0 for 3 cycles then alert
     group health
-
 
 ## smart test drive sdf
 check program SSD-F-Health with path "/etc/monit/scripts/hdhealth.sh f"
@@ -380,7 +391,7 @@ check program SSD-F-Health with path "/etc/monit/scripts/hdhealth.sh f"
 ## HDD Temp drive sdf
 check program DRIVE-F-Temp with path "/etc/monit/scripts/hdtemp.sh f 45"
 #    every 10 cycles
-    if status != 0 then alert
+    if status != 0 for 3 cycles then alert
     group health
 
 ## smart test drive sdg
@@ -392,7 +403,7 @@ check program SSD-G-Health with path "/etc/monit/scripts/hdhealth.sh g"
 ## HDD Temp drive sdg
 check program DRIVE-G-Temp with path "/etc/monit/scripts/hdtemp.sh g 45"
 #    every 10 cycles
-    if status != 0 then alert
+    if status != 0 for 3 cycles then alert
     group health
 
 ## smart test drive sdh
@@ -404,7 +415,7 @@ check program SSD-H-Health with path "/etc/monit/scripts/hdhealth.sh h"
 ## HDD Temp drive sdh
 check program DRIVE-H-Temp with path "/etc/monit/scripts/hdtemp.sh h 45"
 #    every 10 cycles
-    if status != 0 then alert
+    if status != 0 for 3 cycles then alert
     group health
 
 ## smart test drive sdi
@@ -420,13 +431,13 @@ check program SSD-I-root-Health with path "/etc/monit/scripts/hdhealth.sh i"
 #    group health
 
 ## pool health - luna
-check program ZPOOL-luna-Health with path "/sbin/zpool status -x luna"
+check program ZPOOL-luna-Health with path "/etc/monit/scripts/poolhealth.sh luna"
 #    every 10 cycles
     if status != 0 then alert
     group health
 
 ## pool health - media
-check program ZPOOL-media-Health with path "/sbin/zpool status -x media"
+check program ZPOOL-media-Health with path "/etc/monit/scripts/poolhealth.sh media"
 #    every 10 cycles
     if status != 0 then alert
     group health
