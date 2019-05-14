@@ -436,8 +436,14 @@ check program ZPOOL-luna-Health with path "/etc/monit/scripts/poolhealth.sh luna
     if status != 0 then alert
     group health
 
-## pool health - media
-check program ZPOOL-media-Health with path "/etc/monit/scripts/poolhealth.sh media"
+## pool health - zmirror_6T_a
+check program ZPOOL-zmirror_6T_a-Health with path "/etc/monit/scripts/poolhealth.sh zmirror_6T_a"
+#    every 10 cycles
+    if status != 0 then alert
+    group health
+
+## pool health - zmirror_3T_a
+check program ZPOOL-zmirror_3T_a-Health with path "/etc/monit/scripts/poolhealth.sh zmirror_3T_a"
 #    every 10 cycles
     if status != 0 then alert
     group health
