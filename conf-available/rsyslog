@@ -16,10 +16,10 @@
    group rsyslogd
    include /etc/monit/templates/rootbin
 
- check file rsyslog_file with path /var/log/messages
+ check file rsyslog_file with path /var/log/syslog
    group rsyslogd
    # Note: activate the immark plugin for rsyslog if
-   # your system is too on events.
+   # your system is too low on events.
    if timestamp > 65 minutes then alert
    if failed permission 640  then unmonitor
    if failed uid root        then unmonitor
