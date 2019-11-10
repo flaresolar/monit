@@ -168,8 +168,8 @@ set mailserver smtp.EMAILHOST port 587
 ## performed should a test fail.
 #
   check system $HOST
-    if loadavg (1min) > 10 then alert
-    if loadavg (5min) > 10 then alert
+    if loadavg (1min) > 16 then alert
+    if loadavg (5min) > 12 then alert
     if cpu usage > 95% for 10 cycles then alert
     if memory usage > 75% then alert
     if swap usage > 25% then alert
